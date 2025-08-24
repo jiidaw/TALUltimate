@@ -3,10 +3,11 @@ package com.talultimate.features;
 import com.talultimate.TalUltimatePlugin;
 import com.talultimate.core.WeightedPicker;
 import org.bukkit.Material;
-import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Map;
 
 public class GachaManager {
     private final TalUltimatePlugin plugin;
@@ -15,13 +16,17 @@ public class GachaManager {
     public void gachaItem(Player p, boolean premium){
         int price = plugin.getConfig().getInt("gacha.item."+(premium?"premium-price":"normal-price"), 1000);
         if (!TalUltimatePlugin.ECON.take(p, price)){ p.sendMessage("§e잔액 부족"); return; }
+
         WeightedPicker<R> picker = new WeightedPicker<>();
-        for (var m : plugin.getConfig().getMapList("gacha.item.pool")){
-            String type = (String)m.get("type");
-            int weight = ((Number)m.get("weight")).intValue();
-            R r = new R(type,(String)m.getOrDefault("material",""),((Number)m.getOrDefault("amount",1)).intValue());
-            picker.add(r, weight);
+        List<Map<?,?>> pool = plugin.getConfig().getMapList("gacha.item.pool");
+        for (Map<?,?> m : pool){
+            String type = String.valueOf(m.get("type"));
+            String material = String.valueOf(m.getOrDefault("material",""));
+            int amount = ((Number)m.getOrDefault("amount",1)).intValue();
+            int weight = ((Number)m.getOrDefault("weight",1)).intValue();
+            picker.add(new R(type, material, amount), weight);
         }
+
         R pick = picker.pick();
         if (pick==null){ p.sendMessage("§e당첨 없음"); return; }
         switch (pick.type){
@@ -37,7 +42,8 @@ public class GachaManager {
             case "VOUCHER_OP_SUMMON" -> p.sendMessage("§c운영자 소환권 x1 (임시)");
         }
     }
-    record R(String type, String material, int amount){}
+    public record R(String type, String material, int amount){}
+
     public void gachaTitle(Player p){
         int price = plugin.getConfig().getInt("gacha.title.price", 5000);
         if (!TalUltimatePlugin.ECON.take(p, price)){ p.sendMessage("§e잔액 부족"); return; }
@@ -58,13 +64,4 @@ public class GachaManager {
         TalUltimatePlugin.TITLES.grant(p, chosenId, true);
     }
 }
-class GachaCommand implements CommandExecutor {
-    private final TalUltimatePlugin plugin; private final boolean title;
-    public GachaCommand(TalUltimatePlugin plugin, boolean title){ this.plugin=plugin; this.title=title; }
-    @Override public boolean onCommand(@NotNull CommandSender s,@NotNull Command c,@NotNull String l,@NotNull String[] a){
-        if (!(s instanceof Player p)){ s.sendMessage("player only"); return true; }
-        if (title) TalUltimatePlugin.GACHA.gachaTitle(p);
-        else TalUltimatePlugin.GACHA.gachaItem(p, a.length>0 && a[0].equalsIgnoreCase("premium"));
-        return true;
-    }
-}
+
