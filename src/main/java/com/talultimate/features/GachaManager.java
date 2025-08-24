@@ -19,11 +19,20 @@ public class GachaManager {
 
         WeightedPicker<R> picker = new WeightedPicker<>();
         List<Map<?,?>> pool = plugin.getConfig().getMapList("gacha.item.pool");
+
         for (Map<?,?> m : pool){
-            String type = String.valueOf(m.get("type"));
-            String material = String.valueOf(m.getOrDefault("material",""));
-            int amount = ((Number)m.getOrDefault("amount",1)).intValue();
-            int weight = ((Number)m.getOrDefault("weight",1)).intValue();
+            Object typeObj = m.get("type");
+            String type = (typeObj != null) ? typeObj.toString() : "LOSE";
+
+            Object matObj = m.get("material");
+            String material = (matObj != null) ? matObj.toString() : "";
+
+            Object amountObj = m.get("amount");
+            int amount = (amountObj instanceof Number) ? ((Number)amountObj).intValue() : 1;
+
+            Object weightObj = m.get("weight");
+            int weight = (weightObj instanceof Number) ? ((Number)weightObj).intValue() : 1;
+
             picker.add(new R(type, material, amount), weight);
         }
 
@@ -42,6 +51,7 @@ public class GachaManager {
             case "VOUCHER_OP_SUMMON" -> p.sendMessage("§c운영자 소환권 x1 (임시)");
         }
     }
+
     public record R(String type, String material, int amount){}
 
     public void gachaTitle(Player p){
@@ -49,8 +59,10 @@ public class GachaManager {
         if (!TalUltimatePlugin.ECON.take(p, price)){ p.sendMessage("§e잔액 부족"); return; }
         var weights = plugin.getConfig().getConfigurationSection("gacha.title.weights");
         if (weights==null){ p.sendMessage("§e가중치 미설정"); return; }
+
         WeightedPicker<String> picker = new WeightedPicker<>();
         for (String g : weights.getKeys(false)) picker.add(g, weights.getInt(g));
+
         String grade = picker.pick();
         String chosenId = null;
         var list = plugin.getConfig().getConfigurationSection("titles.list");
@@ -64,4 +76,3 @@ public class GachaManager {
         TalUltimatePlugin.TITLES.grant(p, chosenId, true);
     }
 }
-
