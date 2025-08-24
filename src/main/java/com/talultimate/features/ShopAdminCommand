@@ -1,9 +1,7 @@
 package com.talultimate.features;
 
 import com.talultimate.TalUltimatePlugin;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,14 +14,14 @@ public class ShopAdminCommand implements CommandExecutor {
         if (!(sender instanceof Player p)){ sender.sendMessage("player only"); return true; }
         if (!p.isOp()){ p.sendMessage("§cOP만 사용 가능합니다."); return true; }
 
-        // 예시: /shopadmin DIAMOND 250
         if (args.length < 2){ p.sendMessage("§e사용법: /shopadmin <아이템> <가격>"); return true; }
         String mat = args[0].toUpperCase();
         int price;
         try { price = Integer.parseInt(args[1]); }
         catch (NumberFormatException e){ p.sendMessage("§c숫자를 입력하세요."); return true; }
 
-        plugin.getConfig().set("shop.sell."+mat, price);
+        // 설정값 저장(간단 버전: config 내 위치는 마음대로 써도 됨)
+        plugin.getConfig().set("economy.ore-prices."+mat, price);
         plugin.saveConfig();
         p.sendMessage("§a상점 가격 변경: "+mat+" = "+price+"원");
         return true;
