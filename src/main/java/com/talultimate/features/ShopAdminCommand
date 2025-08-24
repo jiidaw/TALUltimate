@@ -20,7 +20,7 @@ public class ShopAdminCommand implements CommandExecutor {
         try { price = Integer.parseInt(args[1]); }
         catch (NumberFormatException e){ p.sendMessage("§c숫자를 입력하세요."); return true; }
 
-        // 설정값 저장(간단 버전: config 내 위치는 마음대로 써도 됨)
+        // 예시: 광물 판매가 테이블 수정
         plugin.getConfig().set("economy.ore-prices."+mat, price);
         plugin.saveConfig();
         p.sendMessage("§a상점 가격 변경: "+mat+" = "+price+"원");
