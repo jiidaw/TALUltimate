@@ -1,9 +1,10 @@
 package com.talultimate;
 
-import com.talultimate.features.*;
-import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.talultimate.features.WarpCommand;
+import com.talultimate.features.SetTitleCommand;
+import com.talultimate.features.ShopAdminCommand;
+import com.talultimate.listeners.LevelRewardListener;
+
 
 public class TalUltimatePlugin extends JavaPlugin {
 
