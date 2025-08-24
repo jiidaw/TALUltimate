@@ -1,0 +1,107 @@
+economy:
+  start-money: 0
+  level-reward-per: 2000
+  ore-prices:
+    DIAMOND: 200
+    RAW_IRON: 20
+    RAW_GOLD: 40
+    EMERALD: 180
+    REDSTONE: 4
+    LAPIS_LAZULI: 8
+    COAL: 5
+  crop-prices:
+    WHEAT: 8
+    CARROT: 8
+    POTATO: 8
+    BEETROOT: 10
+    SUGAR_CANE: 5
+    COCOA_BEANS: 10
+    PUMPKIN: 20
+    MELON_SLICE: 3
+    SWEET_BERRIES: 6
+    NETHER_WART: 12
+    PUMPKIN_PIE: 300
+notes:
+  10: "§f₩10 동전"
+  100: "§f₩100 동전"
+  500: "§f₩500 동전"
+  1000: "§f₩1,000 지폐"
+  5000: "§f₩5,000 지폐"
+  10000: "§f₩10,000 지폐"
+  50000: "§f₩50,000 지폐"
+warps:
+  plaza: { world: "world", x: 0.0, y: 64.0, z: 0.0, yaw: 0.0, pitch: 0.0, safe_y: true, cooldown_seconds: 5 }
+  arena: { world: "world", x: 100.0, y: 64.0, z: 100.0, yaw: 180.0, pitch: 0.0, safe_y: true, cooldown_seconds: 5 }
+land:
+  enabled: true
+  min-price: 50000
+  sizes: [4, 8, 16]
+  protect: true
+gacha:
+  item:
+    normal-price: 1000
+    premium-price: 1500
+    pool:
+      - { type: "LOSE", weight: 10 }
+      - { type: "ORE", material: "DIAMOND", amount: 2, weight: 6 }
+      - { type: "ORE", material: "EMERALD", amount: 2, weight: 5 }
+      - { type: "ORE", material: "RAW_GOLD", amount: 8, weight: 8 }
+      - { type: "SEED", material: "WHEAT_SEEDS", amount: 16, weight: 6 }
+      - { type: "VOUCHER_FORCE_TP", amount: 1, weight: 3 }
+      - { type: "VOUCHER_OP_SUMMON", amount: 1, weight: 1 }
+  title:
+    price: 5000
+    weights:
+      COMMON: 70
+      UNIQUE: 25
+      LEGEND: 4
+      TWILIGHT: 1
+titles:
+  colors:
+    NEWBIE: "§e"
+    COMMON: "§f"
+    UNIQUE: "§a"
+    LEGEND: "§6"
+    TWILIGHT: "#9b59b6"
+  list:
+    newbie:
+      name: "뉴비"
+      grade: NEWBIE
+      benefits: { xp-bonus: 0, sell-bonus: 0 }
+    end_free:
+      name: "용기사"
+      grade: UNIQUE
+      obtained-by: { type: ADVANCEMENT, key: "minecraft:end/kill_dragon" }
+      benefits: { xp-bonus: 5, sell-bonus: 2 }
+    iron_overflow:
+      name: "철안 든놈"
+      grade: COMMON
+      obtained-by: { type: ADVANCEMENT, key: "minecraft:story/smelt_iron" }
+      benefits: { xp-bonus: 0, sell-bonus: 1 }
+    baby_question:
+      name: "아기"
+      grade: COMMON
+      obtained-by: { type: ADVANCEMENT, key: "minecraft:husbandry/breed_an_animal" }
+      benefits: { xp-bonus: 0, sell-bonus: 1 }
+    dragon_slayer10:
+      name: "드래곤 학살자"
+      grade: UNIQUE
+      obtained-by: { type: ACTION, action: "KILL_DRAGON", count: 10 }
+      benefits: { xp-bonus: 10, sell-bonus: 5 }
+    alchemist_all:
+      name: "양산형 연금술사"
+      grade: UNIQUE
+      obtained-by: { type: ACTION, action: "ALL_POTIONS", count: 1 }
+      benefits: { xp-bonus: 8, sell-bonus: 3 }
+    legend_blaze:
+      name: "불의 계승자"
+      grade: LEGEND
+      obtained-by: { type: GACHA }
+      color: "§6"
+      benefits: { xp-bonus: 12, sell-bonus: 6 }
+    twilight_void:
+      name: "황혼:공허의 행자"
+      grade: TWILIGHT
+      obtained-by: { type: GACHA }
+      color: "#7f8c8d"
+      benefits: { xp-bonus: 20, sell-bonus: 10 }
