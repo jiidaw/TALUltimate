@@ -1,4 +1,11 @@
-package com.talultimate;
+ppackage com.talultimate;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+public final class TalUltimatePlugin extends JavaPlugin {
+    // ...
+}
+ackage com.talultimate;
 
 import com.talultimate.features.WarpCommand;
 import com.talultimate.features.SetTitleCommand;
