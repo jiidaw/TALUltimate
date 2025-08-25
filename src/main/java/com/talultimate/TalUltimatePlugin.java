@@ -66,3 +66,5 @@ public class TalUltimatePlugin extends JavaPlugin {
 
     private void register(Listener l) { Bukkit.getPluginManager().registerEvents(l, this); }
 }
+// ... 기존 초기화/등록 아래
+new HudManager(this).start();
